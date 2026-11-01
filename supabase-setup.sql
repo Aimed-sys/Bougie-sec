@@ -51,7 +51,7 @@ returns boolean
 language sql
 stable
 as $$
-    select coalesce(auth.jwt() ->> 'email', '') = 'VOTRE_EMAIL_ADMIN'
+    select coalesce(auth.jwt() ->> 'email', '') = 'xboxaimed@gmail.com'
 $$;
 
 -- ---------- Sécurité (Row Level Security) ----------
