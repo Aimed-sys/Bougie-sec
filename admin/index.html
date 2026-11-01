@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Administration — BougieSec</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+
+    <!-- ============ CONNEXION ============ -->
+    <main class="login" id="login-screen">
+        <form class="login-card" id="login-form" autocomplete="on">
+            <img src="../images/logo.jpg" alt="BougieSec" class="login-logo" width="120" height="90">
+            <h1>Administration</h1>
+            <p class="login-sub">Accès réservé à la gestion des commandes et des produits.</p>
+
+            <label class="field" id="email-field" hidden>
+                <span>Email administrateur</span>
+                <input type="email" id="login-email" autocomplete="username" placeholder="vous@exemple.com">
+            </label>
+
+            <label class="field">
+                <span>Mot de passe</span>
+                <input type="password" id="login-password" autocomplete="current-password" required autofocus>
+            </label>
+
+            <p class="form-error" id="login-error" role="alert" hidden></p>
+
+            <button type="submit" class="btn btn-primary btn-block" id="login-submit">Se connecter</button>
+            <a class="back-link" href="../index.html">← Retour au site</a>
+        </form>
+    </main>
+
+    <!-- ============ APPLICATION ============ -->
+    <div class="app" id="app" hidden>
+
+        <header class="topbar">
+            <div class="topbar-brand">
+                <img src="../images/logo.jpg" alt="" width="64" height="48">
+                <div>
+                    <strong>BougieSec</strong>
+                    <span>Administration</span>
+                </div>
+            </div>
+
+            <nav class="tabs" role="tablist" aria-label="Sections">
+                <button class="tab is-active" role="tab" id="tab-orders" aria-selected="true" aria-controls="panel-orders" data-tab="orders">
+                    Commandes <span class="tab-badge" id="badge-new" hidden>0</span>
+                </button>
+                <button class="tab" role="tab" id="tab-products" aria-selected="false" aria-controls="panel-products" data-tab="products">
+                    Produits <span class="tab-badge tab-badge--warn" id="badge-dirty" hidden>•</span>
+                </button>
+            </nav>
+
+            <div class="topbar-right">
+                <span class="mode-pill" id="mode-pill"></span>
+                <a class="btn btn-ghost btn-small" href="../index.html" target="_blank" rel="noopener">Voir le site</a>
+                <button type="button" class="btn btn-ghost btn-small" id="logout">Déconnexion</button>
+            </div>
+        </header>
+
+        <div class="notice" id="mode-notice" hidden></div>
+
+        <!-- ---------- COMMANDES ---------- -->
+        <section class="panel" id="panel-orders" role="tabpanel" aria-labelledby="tab-orders">
+
+            <div class="stats" id="stats"></div>
+
+            <div class="toolbar">
+                <input type="search" id="order-search" placeholder="Rechercher un nom, un téléphone, un produit…" aria-label="Rechercher une commande">
+                <select id="order-status-filter" aria-label="Filtrer par statut">
+                    <option value="">Tous les statuts</option>
+                    <option value="nouveau">Nouvelles</option>
+                    <option value="en_cours">En cours</option>
+                    <option value="traite">Traitées</option>
+                    <option value="annule">Annulées</option>
+                </select>
+                <select id="order-type-filter" aria-label="Filtrer par type">
+                    <option value="">Commandes et demandes</option>
+                    <option value="commande">Commandes uniquement</option>
+                    <option value="demande">Demandes uniquement</option>
+                </select>
+                <button type="button" class="btn btn-ghost" id="orders-refresh">Actualiser</button>
+                <button type="button" class="btn btn-ghost" id="orders-export">Exporter (CSV)</button>
+            </div>
+
+            <p class="form-error" id="orders-error" role="alert" hidden></p>
+
+            <div class="table-wrap">
+                <table class="table" id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Produits</th>
+                            <th>Statut</th>
+                            <th class="col-actions"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body"></tbody>
+                </table>
+            </div>
+            <p class="empty" id="orders-empty" hidden></p>
+        </section>
+
+        <!-- ---------- PRODUITS ---------- -->
+        <section class="panel" id="panel-products" role="tabpanel" aria-labelledby="tab-products" hidden>
+
+            <div class="panel-head">
+                <div>
+                    <h2>Catalogue produits</h2>
+                    <p>Modifiez le nom, le prix (en DA par kg) et la disponibilité. Les changements apparaissent sur le site dès que vous enregistrez.</p>
+                </div>
+                <div class="panel-head-actions">
+                    <button type="button" class="btn btn-ghost" id="products-reset">Rétablir le catalogue par défaut</button>
+                    <button type="button" class="btn btn-primary" id="products-save">Enregistrer</button>
+                </div>
+            </div>
+
+            <form class="add-product" id="add-product-form">
+                <strong>Ajouter un produit</strong>
+                <input type="text" id="new-name" placeholder="Nom du produit" required aria-label="Nom du nouveau produit">
+                <select id="new-category" aria-label="Catégorie"></select>
+                <select id="new-availability" aria-label="Disponibilité">
+                    <option value="disponible">Disponible</option>
+                    <option value="limite">Stock limité</option>
+                    <option value="indisponible">Indisponible</option>
+                </select>
+                <input type="number" id="new-price" min="0" step="1" placeholder="Prix DA/kg" aria-label="Prix en DA par kg">
+                <button type="submit" class="btn btn-ghost">Ajouter</button>
+            </form>
+
+            <div id="products-groups"></div>
+        </section>
+    </div>
+
+    <!-- ============ DÉTAIL D'UNE COMMANDE ============ -->
+    <dialog class="dialog" id="order-dialog" aria-labelledby="dialog-title">
+        <div class="dialog-inner" id="dialog-content"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="../config.js"></script>
+    <script src="../db.js"></script>
+    <script src="../products-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
