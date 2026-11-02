@@ -12,7 +12,7 @@
    - ADMIN_EMAIL       : l'email du compte administrateur créé dans Supabase > Authentication > Users
 ========================================================= */
 window.BOUGIESEC_CONFIG = {
-    SUPABASE_URL: "https://pueaxemqnprpgwcauynl.supabase.co/rest/v1/",
+    SUPABASE_URL: "https://pueaxemqnprpgwcauynl.supabase.co",
     SUPABASE_ANON_KEY: "sb_publishable_4pKc85GqDaUS4aUWFf3ZUA_WjCfW2si",
     ADMIN_EMAIL: "xboxaimed@gmail.com"
 };
