@@ -13,6 +13,6 @@
 ========================================================= */
 window.BOUGIESEC_CONFIG = {
     SUPABASE_URL: "https://pueaxemqnprpgwcauynl.supabase.co/rest/v1/",
-    SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1ZWF4ZW1xbnBycGd3Y2F1eW5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzE1MTYsImV4cCI6MjEwNjgwNzUxNn0.yicTeL7bXnxVl9_KqXZnlyVvs8IT-NgMl3fBEJTJTXc",
+    SUPABASE_ANON_KEY: "sb_publishable_4pKc85GqDaUS4aUWFf3ZUA_WjCfW2si",
     ADMIN_EMAIL: "xboxaimed@gmail.com"
 };
