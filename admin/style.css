@@ -111,6 +111,7 @@ textarea { width: 100%; min-height: 96px; resize: vertical; }
 }
 .login-logo { margin: 0 auto 18px; width: 104px; height: auto; }
 .login-card h1 { font-size: 28px; margin-bottom: 8px; }
+.login-mode { margin: -14px 0 22px; padding: 8px 12px; border-radius: var(--r-s); background: rgba(166, 124, 61, 0.16); color: #5c4310; font-size: 13px; }
 .login-sub { margin-bottom: 26px; color: var(--noyer-soft); font-size: 14.5px; }
 .back-link { display: inline-block; margin-top: 18px; color: var(--noyer-mute); font-size: 14px; text-decoration: none; }
 .back-link:hover { color: var(--olive); text-decoration: underline; }

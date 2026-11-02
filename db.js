@@ -39,7 +39,15 @@ const DB = (function () {
             headers: { "apikey": cfg.SUPABASE_ANON_KEY, "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-        if (!res.ok) throw new Error("auth");
+        if (!res.ok) {
+            let info = {};
+            try { info = await res.json(); } catch (e) { /* réponse vide */ }
+            const error = new Error("auth");
+            error.status = res.status;
+            error.code = info.error_code || info.error || "";
+            error.detail = info.msg || info.error_description || "";
+            throw error;
+        }
         return res.json();
     }
 

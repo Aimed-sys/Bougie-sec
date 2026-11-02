@@ -92,6 +92,11 @@ function showLoginError(message) {
     el.hidden = !message;
 }
 
+// Indique clairement dans quel mode on se trouve
+$("#login-mode").textContent = DB.enabled
+    ? "Mode base de données : utilisez le mot de passe du compte créé dans Supabase."
+    : "Mode test (config.js vide) : utilisez le mot de passe défini dans admin/script.js.";
+
 // En mode Supabase sans ADMIN_EMAIL dans config.js, on demande l'email
 if (DB.enabled && !DB.adminEmail) {
     $("#email-field").hidden = false;
@@ -123,7 +128,14 @@ $("#login-form").addEventListener("submit", async (event) => {
 
     } catch (err) {
         if (err instanceof TypeError) {
-            showLoginError("Impossible de joindre le serveur. Vérifiez votre connexion et config.js.");
+            showLoginError("Impossible de joindre le serveur. Vérifiez votre connexion, SUPABASE_URL et SUPABASE_ANON_KEY dans config.js.");
+        } else if (DB.enabled && err.code === "email_not_confirmed") {
+            showLoginError("Compte non confirmé : dans Supabase > Authentication > Users, confirmez ce compte (ou recréez-le avec « Auto Confirm User »).");
+        } else if (DB.enabled && err.code === "invalid_credentials") {
+            showLoginError("Email ou mot de passe incorrect pour le compte Supabase. Vérifiez que ADMIN_EMAIL dans config.js est exactement l'email du compte, et que le mot de passe est celui défini dans Supabase.");
+            $("#login-password").select();
+        } else if (DB.enabled) {
+            showLoginError(`Connexion refusée par Supabase${err.detail ? " : " + err.detail : ""}. Vérifiez la clé SUPABASE_ANON_KEY dans config.js.`);
         } else {
             showLoginError("Mot de passe incorrect.");
             $("#login-password").select();
